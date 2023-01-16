@@ -5,6 +5,9 @@ from Crypto.Util import number
 
 
 def egcd(a, b):
+    """
+    Extended Euclidian Algorithm for gcd
+    """
     if a == 0:
         return b, 0, 1
     else:
@@ -13,6 +16,9 @@ def egcd(a, b):
 
 
 def is_prime(n):
+    """
+    Primality test
+    """
     if n < 2:
         return False
     if n == 2:
@@ -26,6 +32,9 @@ def is_prime(n):
 
 
 def generate_keys(num_of_bits):
+    """
+    Generate as large as num_of_bits prime numbers for keys
+    """
     p, q = 0, 0
 
     while p % 4 != 3:
@@ -40,20 +49,22 @@ def generate_keys(num_of_bits):
 
 
 def encryption(plaintext, n):
-    # c = m^2 mod n
+    """
+    c = m^2 mod n
+    :param n: public key n = p * q
+    """
     plaintext = padding(plaintext)
     return plaintext ** 2 % n
 
 
-# padding 16 bits to the end of a number
-# create m
 def padding(plaintext):
-    binary_str = ''.join(format(ord(i), '08b') for i in plaintext)  # convert to a bit string
-    # binary_str = plaintext.encode('ascii')  # convert to a bit string
-    output = binary_str  # pad the last 16 bits to the end
-    decimal_msg = int(output, 2)
-    # decimal_msg = int.from_bytes(binary_str, "big")
-    return decimal_msg  # convert back to integer
+    # convert to a bit string
+    binary_str = ''.join(format(ord(i), '08b') for i in plaintext)
+
+    # convert back to integer
+    decimal_msg = int(binary_str, 2)
+
+    return decimal_msg
 
 
 def decrypt(message: int, p: int, q: int):
