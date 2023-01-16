@@ -1,5 +1,6 @@
 import binascii
 import random
+import re
 
 from Crypto.Util import number
 
@@ -53,6 +54,13 @@ def encryption(plaintext, n):
     c = m^2 mod n
     :param n: public key n = p * q
     """
+    def validate(plaintext):
+        regex = re.compile(r'[^ a-zA-Z]')
+        if regex.search(plaintext):
+            raise Exception("Plaintext contains characters out of the english alphabet")
+
+    validate(plaintext)
+    # c = m^2 mod n
     plaintext = padding(plaintext)
     return plaintext ** 2 % n
 
@@ -94,7 +102,7 @@ def choose(lst: list[int]):
 
 
 if __name__ == '__main__':
-    mess = "Bu n"
+    mess = "Bu5n"
     lst = []
     encrypted_m = 0
     decrypted_ops = ""
