@@ -1,1 +1,2 @@
-# lab4-pkc
+# Simplified Rabin Encryption
+A simplified version of the Rabin encryption algorithm
